@@ -1,0 +1,212 @@
+===============================================================================
+  AVALIAÇÃO TÉCNICA AGROSYS - PROJETO CRUD WEB
+  Cadastro de Clientes e Endereços
+===============================================================================
+
+-------------------------------------------------------------------------------
+1. COMO EXECUTAR
+-------------------------------------------------------------------------------
+
+O projeto NÃO precisa de instalação, servidor, Node.js ou internet.
+Todas as bibliotecas estão incluídas localmente na pasta "lib/".
+
+  1) Descompacte o arquivo .zip.
+  2) Abra o arquivo "index.html" com um duplo clique (Chrome, Edge ou
+     Firefox, em versões recentes).
+  3) Pronto: a tela de login vai aparecer.
+
+(Opcional) Se preferir rodar com um servidor local:
+     cd agrosys-crud
+     python3 -m http.server 8080
+  e acesse http://localhost:8080 no navegador.
+
+Observação: o banco de dados fica no localStorage do navegador. Se trocar de
+navegador, ou de file:// para http://localhost, o banco começa vazio (basta
+importar o banco de exemplo de novo, veja o item 2).
+
+-------------------------------------------------------------------------------
+2. PRIMEIRO ACESSO / BANCO DE DADOS PRÉ-POPULADO
+-------------------------------------------------------------------------------
+
+Na primeira execução o banco está vazio. Há duas opções:
+
+  A) Criar um usuário na aba "Cadastrar" da tela de login; ou
+
+  B) Carregar o banco de exemplo incluído no projeto:
+       - Na tela de login, clique em "Configurações";
+       - Selecione (ou arraste) o arquivo "banco-exemplo.json";
+       - Clique em "Importar banco de dados" e confirme.
+
+     O banco de exemplo tem 6 clientes, 8 endereços e dois usuários.
+     Cada usuário vê somente os próprios clientes:
+
+         Usuário: admin        Senha: admin123   (4 clientes)
+         Usuário: avaliador    Senha: agrosys    (2 clientes)
+
+-------------------------------------------------------------------------------
+3. FUNCIONALIDADES (REQUISITOS DO DOCUMENTO)
+-------------------------------------------------------------------------------
+
+[x] Tela de login com usuário e senha.
+[x] Cadastro de novo usuário pela própria tela de login.
+    - Não é possível cadastrar dois usuários iguais (sem diferenciar
+      maiúsculas e minúsculas: "Admin" = "admin").
+[x] Opção "Configurações" na tela de login, com upload de um banco de dados
+    pré-populado (arquivo JSON).
+[x] Tela de listagem e cadastro de clientes com: Nome completo, CPF, Data de
+    nascimento, Telefone e Celular.
+    - Não é possível cadastrar dois clientes com o mesmo CPF (vale também
+      na edição). A regra vale dentro da carteira de cada usuário (ver
+      item 4.1).
+    - Cada usuário vê, cadastra, edita e exclui somente os próprios
+      clientes e endereços (ver item 4.1).
+[x] Tela de listagem e cadastro de endereços do cliente com: CEP, Rua,
+    Bairro, Cidade, Estado, País e Identificador do cliente.
+    - Cada cliente pode ter 1 ou mais endereços.
+    - Um dos endereços é obrigatoriamente o principal.
+[x] Exportação do banco de dados em JSON:
+    - botão "Exportar" no topo da área logada: exporta somente os dados do
+      usuário logado (a conta dele, seus clientes e endereços);
+    - "Configurações", na tela de login: exporta o banco completo (backup).
+[x] Banco de dados SQL com o plugin AlaSQL, salvo no localStorage do
+    navegador (CREATE / ATTACH / USE localStorage DATABASE).
+[x] HTML + CSS + JavaScript, com jQuery e Bootstrap 5 (opcionais).
+[x] Mobile friendly: layout responsivo; no celular a tabela de clientes vira
+    cartões e os formulários abrem em tela cheia.
+
+-------------------------------------------------------------------------------
+4. REGRA DO ENDEREÇO PRINCIPAL
+-------------------------------------------------------------------------------
+
+  - O primeiro endereço de um cliente vira o principal automaticamente.
+  - Ao marcar outro endereço como principal (no formulário ou pelo botão
+    "Tornar principal"), o anterior passa a ser secundário.
+  - O endereço principal não pode ser simplesmente desmarcado; para trocar,
+    é preciso marcar outro como principal.
+  - Se o endereço principal for excluído, o endereço mais antigo do cliente
+    passa a ser o principal.
+  - Ao cadastrar um novo cliente, o sistema já abre a tela de endereços dele.
+    Clientes sem endereço aparecem na listagem com o aviso "Sem endereço".
+
+-------------------------------------------------------------------------------
+4.1 DADOS SEPARADOS POR USUÁRIO
+-------------------------------------------------------------------------------
+
+  - Cada cliente pertence ao usuário que o cadastrou (coluna
+    clientes.usuario_id); os endereços pertencem ao cliente.
+  - O usuário logado só vê, cadastra, edita e exclui os próprios clientes e
+    endereços. Um usuário não tem acesso aos dados de outro.
+  - A proteção fica na camada de dados (js/db.js): todas as consultas de
+    clientes e endereços passam por DB.doUsuario(id), que filtra pelo
+    usuário logado. Mesmo digitando na URL o ID de um cliente de outro
+    usuário (app.html#cliente/5), o sistema responde "Cliente não
+    encontrado" e nada é alterado.
+  - O CPF é único por usuário: dois usuários diferentes podem ter, cada um,
+    um cliente com o mesmo CPF. Assim o sistema não revela que outro
+    usuário já cadastrou aquela pessoa.
+  - Bancos antigos (de antes dessa separação), ao serem abertos ou
+    importados, têm os clientes atribuídos ao primeiro usuário cadastrado.
+
+-------------------------------------------------------------------------------
+5. MELHORIAS ALÉM DO SOLICITADO
+-------------------------------------------------------------------------------
+
+  - Edição e exclusão de clientes e endereços (CRUD completo). Ao excluir um
+    cliente, os endereços dele também são excluídos.
+  - Validação do CPF pelos dígitos verificadores, de telefone e celular, do
+    CEP e da data de nascimento (não aceita data futura).
+  - Máscaras de digitação para CPF, telefone, celular e CEP.
+  - Preenchimento automático do endereço pelo CEP (API pública ViaCEP).
+    Essa é a única função que usa internet. Sem conexão, o endereço é
+    preenchido à mão normalmente.
+  - Senhas salvas com hash SHA-256 e salt aleatório (nunca em texto puro).
+  - Sessão do usuário (sessionStorage) e proteção da área logada: sem login,
+    o acesso a app.html volta para a tela de login.
+  - Busca de clientes por nome, CPF, telefone ou cidade.
+  - Validação do arquivo importado (estrutura, campos obrigatórios, IDs,
+    usuários e CPFs duplicados e endereços ligados a clientes que não
+    existem), com confirmação antes de substituir os dados.
+  - Proteção contra XSS (escape de todo conteúdo exibido).
+  - Avisos visuais para cada ação:
+      * notificações coloridas por tipo (verde = cadastro, azul = edição,
+        vermelho = exclusão, amarelo = atenção), com barra de tempo;
+      * o registro criado ou editado pisca em destaque na listagem;
+      * o registro excluído sai da tela com animação;
+      * confirmação com ícone antes de excluir ou importar;
+      * formulários indicam o modo ("Novo" / "Editando") e perguntam antes
+        de fechar se houver alterações não salvas.
+  - Componentes reutilizáveis (Web Components nativos) para os trechos
+    repetidos das telas; veja o item 6.
+
+-------------------------------------------------------------------------------
+6. ESTRUTURA DO PROJETO
+-------------------------------------------------------------------------------
+
+  agrosys-crud/
+  |-- index.html           Tela de login, cadastro de usuário e Configurações
+  |-- app.html             Área logada (clientes e endereços)
+  |-- banco-exemplo.json   Banco pré-populado para importação
+  |-- INFO.txt             Este arquivo
+  |-- css/
+  |   `-- style.css        Estilos próprios
+  |-- js/
+  |   |-- componentes/     Componentes visuais reutilizáveis (ver abaixo)
+  |   |-- utils.js         Máscaras, validações, hash, datas, arquivos
+  |   |-- db.js            Camada de dados (AlaSQL) e regras de negócio
+  |   |-- sessao.js        Controle de sessão do usuário
+  |   |-- banco-arquivo.js Exportação e importação do banco (JSON)
+  |   |-- login.js         Lógica da tela de login
+  |   |-- clientes.js      Listagem e cadastro de clientes
+  |   |-- enderecos.js     Listagem e cadastro de endereços
+  |   `-- app.js           Navegação da área logada e ações globais
+  `-- lib/                 Bibliotecas (cópia local, funciona offline)
+      |-- alasql.min.js            AlaSQL 4.6
+      |-- jquery.min.js            jQuery 3.7.1
+      |-- bootstrap.min.css        Bootstrap 5.3.3
+      |-- bootstrap.bundle.min.js
+      |-- bootstrap-icons.min.css  Bootstrap Icons 1.11.3
+      `-- fonts/
+
+  Componentes (js/componentes/)
+  -----------------------------
+  São Custom Elements nativos do navegador. Funcionam abrindo o HTML direto
+  do disco (file://), sem servidor e sem build. O navegador bloqueia o
+  carregamento de arquivos .html separados nesse modo, por isso os
+  componentes são definidos em JavaScript.
+
+  |-- componente-base.js       Classe base (renderização e atributos)
+  |-- aviso.js                 Notificações, destaque e animação de saída
+  |-- app-marca.js             <app-marca>             logo (login e topo)
+  |-- app-campo-senha.js       <app-campo-senha>       senha com "mostrar"
+  |-- app-estado-vazio.js      <app-estado-vazio>      lista sem registros
+  |-- app-modal-confirmacao.js <app-modal-confirmacao> confirmar ações
+  `-- app-modal-formulario.js  <app-modal-formulario>  modal de cadastro
+
+-------------------------------------------------------------------------------
+7. MODELO DE DADOS (AlaSQL)
+-------------------------------------------------------------------------------
+
+  usuarios  (id, nome, usuario, senha_hash, salt, criado_em)
+  clientes  (id, usuario_id, nome, cpf, data_nascimento, telefone,
+             celular, criado_em, atualizado_em)
+  enderecos (id, cliente_id, cep, rua, numero, complemento, bairro, cidade,
+             estado, pais, principal, criado_em, atualizado_em)
+
+  O JSON exportado tem uma chave para cada tabela ("usuarios", "clientes",
+  "enderecos") e é o mesmo formato aceito pela importação.
+
+-------------------------------------------------------------------------------
+8. DICAS PARA O AVALIADOR
+-------------------------------------------------------------------------------
+
+  - Para zerar o sistema: importe um JSON com tabelas vazias, ou limpe o
+    localStorage do navegador (F12 > Application > Local Storage).
+  - Para testar CPF duplicado: com o banco de exemplo carregado, entre como
+    "admin" e tente cadastrar o CPF 123.456.789-09 (já pertence a "Ana
+    Paula Ferreira").
+  - Para testar a separação por usuário: entre como "admin" (4 clientes),
+    saia e entre como "avaliador" (2 clientes diferentes). Ou crie uma
+    conta nova, que começa sem nenhum cliente.
+  - CPF válido para testar um cadastro novo: 529.982.247-25
+
+===============================================================================

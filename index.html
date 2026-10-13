@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2e7d32">
+  <title>Login | Agrosys - Cadastro de Clientes</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🌱</text></svg>">
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina-login">
+
+  <main class="container">
+    <div class="row justify-content-center align-items-center min-vh-100 py-4">
+      <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+
+        <app-marca variante="login" subtitulo="Cadastro de Clientes e Endereços"></app-marca>
+
+        <div class="card shadow-lg border-0">
+          <div class="card-body p-4">
+
+            <!-- Abas Entrar / Cadastrar -->
+            <ul class="nav nav-pills nav-justified mb-4" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="aba-login" data-bs-toggle="pill" data-bs-target="#painel-login" type="button" role="tab" aria-controls="painel-login" aria-selected="true">
+                  <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="aba-cadastro" data-bs-toggle="pill" data-bs-target="#painel-cadastro" type="button" role="tab" aria-controls="painel-cadastro" aria-selected="false">
+                  <i class="bi bi-person-plus me-1"></i> Cadastrar
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+
+              <!-- LOGIN -->
+              <div class="tab-pane fade show active" id="painel-login" role="tabpanel" aria-labelledby="aba-login">
+                <form id="form-login" novalidate autocomplete="on">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="login-usuario" name="usuario" placeholder="Usuário" autocomplete="username" autocapitalize="none" required>
+                    <label for="login-usuario"><i class="bi bi-person me-1"></i> Usuário</label>
+                    <div class="invalid-feedback">Informe o usuário.</div>
+                  </div>
+                  <app-campo-senha campo-id="login-senha" icone="bi-lock"></app-campo-senha>
+                  <div class="alert alert-danger d-none py-2" id="login-erro" role="alert"></div>
+                  <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
+                  </button>
+                </form>
+              </div>
+
+              <!-- CADASTRO DE USUÁRIO -->
+              <div class="tab-pane fade" id="painel-cadastro" role="tabpanel" aria-labelledby="aba-cadastro">
+                <form id="form-cadastro" novalidate autocomplete="off">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cad-nome" name="nome" placeholder="Nome" maxlength="100" required>
+                    <label for="cad-nome">Nome</label>
+                    <div class="invalid-feedback">Informe seu nome.</div>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cad-usuario" name="usuario" placeholder="Usuário" maxlength="30" autocapitalize="none" autocomplete="username" required>
+                    <label for="cad-usuario">Usuário</label>
+                    <div class="invalid-feedback">Usuário inválido.</div>
+                    <div class="form-text">3 a 30 caracteres: letras, números, ponto, hífen ou sublinhado.</div>
+                  </div>
+                  <app-campo-senha campo-id="cad-senha" autocomplete="new-password" erro="A senha deve ter no mínimo 6 caracteres."></app-campo-senha>
+                  <app-campo-senha campo-id="cad-confirmacao" nome="confirmacao" rotulo="Confirmar senha" autocomplete="new-password" erro="As senhas não conferem."></app-campo-senha>
+                  <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">
+                    <i class="bi bi-person-check me-1"></i> Criar conta
+                  </button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card-footer bg-transparent text-center py-3">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalConfiguracoes">
+              <i class="bi bi-gear me-1"></i> Configurações
+            </button>
+          </div>
+        </div>
+
+        <p class="text-center text-white-50 small mt-3 mb-0">
+          Os dados ficam salvos localmente no seu navegador.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL CONFIGURAÇÕES -->
+  <div class="modal fade" id="modalConfiguracoes" tabindex="-1" aria-labelledby="tituloConfiguracoes" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="tituloConfiguracoes"><i class="bi bi-gear me-2"></i>Configurações</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+
+          <h3 class="fs-6 fw-semibold mb-2"><i class="bi bi-database me-1"></i> Situação atual do banco</h3>
+          <div class="row g-2 text-center mb-4" id="estatisticas-banco">
+            <div class="col-4"><div class="estatistica"><span data-tabela="usuarios">0</span><small>Usuários</small></div></div>
+            <div class="col-4"><div class="estatistica"><span data-tabela="clientes">0</span><small>Clientes</small></div></div>
+            <div class="col-4"><div class="estatistica"><span data-tabela="enderecos">0</span><small>Endereços</small></div></div>
+          </div>
+
+          <h3 class="fs-6 fw-semibold mb-2"><i class="bi bi-upload me-1"></i> Upload de banco de dados pré-populado</h3>
+          <p class="small text-muted mb-2">
+            Selecione um arquivo <strong>.json</strong> no mesmo formato gerado pela exportação.
+            <strong class="text-danger">Os dados atuais serão substituídos.</strong>
+          </p>
+          <div class="zona-upload mb-2" id="zona-upload" tabindex="0" role="button" aria-label="Selecionar arquivo JSON">
+            <i class="bi bi-cloud-arrow-up fs-2"></i>
+            <div id="nome-arquivo">Clique ou arraste um arquivo JSON aqui</div>
+          </div>
+          <input type="file" id="arquivo-banco" accept=".json,application/json" class="d-none">
+          <button type="button" class="btn btn-primary w-100 mb-4" id="btn-importar" disabled>
+            <i class="bi bi-database-up me-1"></i> Importar banco de dados
+          </button>
+
+          <h3 class="fs-6 fw-semibold mb-2"><i class="bi bi-download me-1"></i> Exportar banco de dados</h3>
+          <button type="button" class="btn btn-outline-success w-100" id="btn-exportar">
+            <i class="bi bi-filetype-json me-1"></i> Exportar para JSON
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-modal-confirmacao></app-modal-confirmacao>
+
+  <!-- Bibliotecas -->
+  <script src="lib/jquery.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="lib/alasql.min.js"></script>
+  <!-- Núcleo -->
+  <script src="js/utils.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/sessao.js"></script>
+  <!-- Componentes visuais -->
+  <script src="js/componentes/componente-base.js"></script>
+  <script src="js/componentes/aviso.js"></script>
+  <script src="js/componentes/app-marca.js"></script>
+  <script src="js/componentes/app-campo-senha.js"></script>
+  <script src="js/componentes/app-modal-confirmacao.js"></script>
+  <!-- Telas -->
+  <script src="js/banco-arquivo.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

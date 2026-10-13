@@ -1,0 +1,419 @@
+/* =========================================================================
+   Agrosys - Cadastro de Clientes
+   Estilos complementares ao Bootstrap 5
+   ========================================================================= */
+
+:root {
+  --agro-verde: #2e7d32;
+  --agro-verde-escuro: #1b5e20;
+  --agro-verde-claro: #e8f5e9;
+  --bs-success: #2e7d32;
+  --bs-success-rgb: 46, 125, 50;
+  --bs-link-color: #2e7d32;
+  --bs-link-hover-color: #1b5e20;
+  --bs-link-color-rgb: 46, 125, 50;
+}
+
+.btn-success {
+  --bs-btn-bg: var(--agro-verde);
+  --bs-btn-border-color: var(--agro-verde);
+  --bs-btn-hover-bg: var(--agro-verde-escuro);
+  --bs-btn-hover-border-color: var(--agro-verde-escuro);
+  --bs-btn-active-bg: var(--agro-verde-escuro);
+  --bs-btn-active-border-color: var(--agro-verde-escuro);
+  --bs-btn-disabled-bg: var(--agro-verde);
+  --bs-btn-disabled-border-color: var(--agro-verde);
+}
+
+.btn-outline-success {
+  --bs-btn-color: var(--agro-verde);
+  --bs-btn-border-color: var(--agro-verde);
+  --bs-btn-hover-bg: var(--agro-verde);
+  --bs-btn-hover-border-color: var(--agro-verde);
+  --bs-btn-active-bg: var(--agro-verde);
+  --bs-btn-active-border-color: var(--agro-verde);
+}
+
+.form-control:focus,
+.form-check-input:focus {
+  border-color: #81c784;
+  box-shadow: 0 0 0 .25rem rgba(46, 125, 50, .2);
+}
+
+.form-check-input:checked {
+  background-color: var(--agro-verde);
+  border-color: var(--agro-verde);
+}
+
+/* ----------------------------- Login ----------------------------- */
+
+.pagina-login {
+  background: linear-gradient(135deg, var(--agro-verde-escuro) 0%, var(--agro-verde) 50%, #689f38 100%);
+  background-attachment: fixed;
+}
+
+.logo-circulo {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  backdrop-filter: blur(4px);
+}
+
+.pagina-login .nav-pills .nav-link {
+  color: #555;
+}
+
+.pagina-login .nav-pills .nav-link.active {
+  background-color: var(--agro-verde);
+  color: #fff;
+}
+
+/* Botão de mostrar/ocultar senha dentro do form-floating */
+.campo-senha {
+  position: relative;
+}
+
+.campo-senha .form-control {
+  padding-right: 3rem;
+}
+
+.campo-senha .btn-ver-senha {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: calc(3.5rem + 2px);
+  color: #6c757d;
+  z-index: 5;
+}
+
+.campo-senha .form-control.is-invalid ~ .btn-ver-senha {
+  right: 1.75rem;
+}
+
+/* Configurações */
+.estatistica {
+  background: var(--agro-verde-claro);
+  border-radius: .5rem;
+  padding: .6rem .25rem;
+}
+
+.estatistica span {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--agro-verde);
+  line-height: 1.2;
+}
+
+.estatistica small {
+  color: #555;
+}
+
+.zona-upload {
+  border: 2px dashed #adb5bd;
+  border-radius: .5rem;
+  padding: 1rem;
+  text-align: center;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all .15s ease-in-out;
+  word-break: break-all;
+}
+
+.zona-upload:hover,
+.zona-upload:focus,
+.zona-upload.arrastando {
+  border-color: var(--agro-verde);
+  background: var(--agro-verde-claro);
+  color: var(--agro-verde);
+  outline: none;
+}
+
+.zona-upload.selecionado {
+  border-style: solid;
+  border-color: var(--agro-verde);
+  color: var(--agro-verde);
+}
+
+/* Modal de confirmação sobre outro modal (ex.: importação nas configurações) */
+#modalConfirmacao {
+  z-index: 1065;
+}
+
+.modal-backdrop + .modal-backdrop {
+  z-index: 1060;
+}
+
+/* ----------------------------- Área logada ----------------------------- */
+
+.barra-topo {
+  background: linear-gradient(90deg, var(--agro-verde-escuro), var(--agro-verde));
+}
+
+.table > thead th {
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.estado-vazio {
+  text-align: center;
+  color: #6c757d;
+  padding: 3rem 1rem;
+  background: #fff;
+  border-radius: .5rem;
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+}
+
+.estado-vazio > .bi {
+  font-size: 3rem;
+  opacity: .4;
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--agro-verde-claro);
+  color: var(--agro-verde);
+  font-weight: 700;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+.card-endereco {
+  transition: box-shadow .15s ease-in-out;
+}
+
+.card-endereco.principal {
+  border: 2px solid var(--agro-verde);
+}
+
+.card-endereco:hover {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1) !important;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+}
+
+/* ----------------------------- Mobile ----------------------------- */
+
+@media (max-width: 575.98px) {
+  main.container {
+    padding-left: .75rem;
+    padding-right: .75rem;
+  }
+
+  #btn-novo-cliente,
+  #btn-novo-endereco {
+    width: 100%;
+  }
+
+  .toast-container {
+    left: 0;
+    right: 0;
+    padding: .5rem !important;
+  }
+
+  .toast-container .toast {
+    width: 100%;
+  }
+}
+
+/* =========================================================================
+   Componentes (js/componentes/)
+   ========================================================================= */
+
+/* Custom elements são "inline" por padrão */
+app-estado-vazio,
+app-campo-senha,
+app-modal-formulario,
+app-modal-confirmacao {
+  display: block;
+}
+
+app-marca {
+  display: contents;
+}
+
+/* <app-estado-vazio tom="alerta"> */
+.estado-vazio-alerta {
+  background: #fff8e1;
+  color: #8a6d00;
+  border: 1px dashed #ffca28;
+  box-shadow: none;
+}
+
+/* <app-modal-confirmacao> */
+.modal-sm-confirmacao {
+  max-width: 420px;
+}
+
+.confirmacao-icone {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  animation: confirmacao-pulso .4s ease-out;
+}
+
+@keyframes confirmacao-pulso {
+  0%   { transform: scale(.6); opacity: 0; }
+  70%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* <app-modal-formulario> selo Novo/Editando */
+.modal-formulario-modo {
+  font-size: .7rem;
+  font-weight: 600;
+}
+
+/* =========================================================================
+   Avisos visuais (aviso.js)
+   ========================================================================= */
+
+.aviso {
+  --aviso-cor: #0d6efd;
+  width: 360px;
+  max-width: 100%;
+  background: #fff;
+  border: 0;
+  border-left: 5px solid var(--aviso-cor);
+  border-radius: .5rem;
+  box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .15);
+  overflow: hidden;
+}
+
+.aviso.showing,
+.aviso.show {
+  animation: aviso-entrada .3s ease-out;
+}
+
+.aviso-icone {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--aviso-cor);
+}
+
+.aviso strong {
+  color: var(--aviso-cor);
+}
+
+.aviso-progresso {
+  height: 3px;
+  background: rgba(0, 0, 0, .05);
+}
+
+.aviso-progresso span {
+  display: block;
+  height: 100%;
+  background: var(--aviso-cor);
+  transform-origin: left;
+  animation-name: aviso-tempo;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.aviso.pausado .aviso-progresso span {
+  animation-play-state: paused;
+}
+
+.aviso-criado   { --aviso-cor: #2e7d32; }
+.aviso-editado  { --aviso-cor: #0d6efd; }
+.aviso-excluido { --aviso-cor: #dc3545; }
+.aviso-erro     { --aviso-cor: #b02a37; }
+.aviso-alerta   { --aviso-cor: #cc8a00; }
+.aviso-info     { --aviso-cor: #0aa2c0; }
+
+@keyframes aviso-entrada {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes aviso-tempo {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+/* Destaque do registro criado / editado (cards: fundo + contorno; linhas da tabela: só o fundo) */
+.destaque-criado:not(tr) {
+  animation: destaque-criado 2s ease-out;
+}
+
+.destaque-editado:not(tr) {
+  animation: destaque-editado 2s ease-out;
+}
+
+tr.destaque-criado > td {
+  animation: destaque-fundo-criado 2s ease-out;
+}
+
+tr.destaque-editado > td {
+  animation: destaque-fundo-editado 2s ease-out;
+}
+
+@keyframes destaque-fundo-criado {
+  0%, 30% { background-color: #c8e6c9; }
+  100%    { background-color: transparent; }
+}
+
+@keyframes destaque-fundo-editado {
+  0%, 30% { background-color: #cfe2ff; }
+  100%    { background-color: transparent; }
+}
+
+@keyframes destaque-criado {
+  0%, 30% { background-color: #c8e6c9; box-shadow: 0 0 0 3px rgba(46, 125, 50, .35); }
+  100%    { background-color: transparent; box-shadow: none; }
+}
+
+@keyframes destaque-editado {
+  0%, 30% { background-color: #cfe2ff; box-shadow: 0 0 0 3px rgba(13, 110, 253, .3); }
+  100%    { background-color: transparent; box-shadow: none; }
+}
+
+/* Saída do registro excluído */
+.saindo,
+.saindo > td {
+  animation: saida-registro .45s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes saida-registro {
+  0%   { opacity: 1; transform: translateX(0); background-color: #f8d7da; }
+  100% { opacity: 0; transform: translateX(40px); background-color: #f8d7da; }
+}
+
+/* Usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .aviso, .confirmacao-icone, .destaque-criado, .destaque-editado, .saindo,
+  .destaque-criado > td, .destaque-editado > td, .saindo > td {
+    animation-duration: .01ms !important;
+  }
+}
+
+/* Avisos ficam abaixo dos modais (backdrop = 1050): nunca cobrem botões de um formulário aberto */
+#aviso-container {
+  z-index: 1045;
+}
